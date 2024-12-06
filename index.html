@@ -10,8 +10,8 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #121212; /* Fondo oscuro */
-      color: #ddd; /* Texto en gris claro */
+      background-color: #121212;
+      color: #ddd;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -31,14 +31,14 @@
 
     textarea {
       width: 100%;
-      height: 200px; /* Ajuste del tamaño */
+      height: 200px;
       font-family: monospace;
       font-size: 14px;
       padding: 10px;
-      border: 1px solid #444; /* Borde más oscuro */
+      border: 1px solid #444;
       border-radius: 5px;
-      background-color: #333; /* Fondo oscuro en el área de texto */
-      color: #ddd; /* Texto claro */
+      background-color: #333;
+      color: #ddd;
       box-sizing: border-box;
     }
 
@@ -50,26 +50,26 @@
     button {
       padding: 10px 20px;
       font-size: 16px;
-      background-color: #1f9; /* Botones con un tono verde claro */
-      color: #121212; /* Texto oscuro para botones */
+      background-color: #1f9;
+      color: #121212;
       border: none;
       border-radius: 5px;
       cursor: pointer;
     }
 
     button:hover {
-      background-color: #0f7; /* Efecto hover más oscuro */
+      background-color: #0f7;
     }
 
     .console {
-      background-color: #000; /* Fondo completamente negro para la consola */
-      color: #0f0; /* Texto verde brillante */
+      background-color: #000;
+      color: #0f0;
       padding: 15px;
       border-radius: 5px;
       font-family: monospace;
       height: 300px;
       overflow-y: auto;
-      text-align: left; /* Asegurar que el texto en la consola se alinee a la izquierda */
+      text-align: left;
     }
 
     .console p {
@@ -77,8 +77,8 @@
     }
 
     h1 {
-      color: #0f0; /* Título en blanco */
-      margin-bottom: 20px; /* Espaciado entre el título y el contenido */
+      color: #0f0; 
+      margin-bottom: 20px; 
     }
   </style>
 </head>
@@ -130,19 +130,16 @@
       consoleOutput.innerHTML = '<p>Consola de salida:</p>';
     });
 
-    // Detectar cuando se presiona la tecla Tab para agregar 4 espacios
     scriptArea.addEventListener('keydown', function(event) {
       if (event.key === 'Tab') {
-        event.preventDefault(); // Prevenir el comportamiento por defecto (salto de tabulación)
+        event.preventDefault();
         
         const cursorPos = scriptArea.selectionStart;
         const textBeforeCursor = scriptArea.value.slice(0, cursorPos);
         const textAfterCursor = scriptArea.value.slice(cursorPos);
 
-        // Insertar 4 espacios en la posición actual del cursor
         scriptArea.value = textBeforeCursor + '    ' + textAfterCursor;
 
-        // Mover el cursor a la posición correcta
         scriptArea.selectionStart = scriptArea.selectionEnd = cursorPos + 4;
       }
     });
