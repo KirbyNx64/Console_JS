@@ -9,9 +9,14 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f4f4f4;
-      color: #333;
+      background-color: #121212; /* Fondo oscuro */
+      color: #ddd; /* Texto en gris claro */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
+
     .container {
       width: 90%;
       max-width: 800px;
@@ -20,40 +25,49 @@
       flex-direction: column;
       gap: 15px;
     }
+
     textarea {
       width: 100%;
-      height: 200px;
+      height: 200px; /* Ajuste del tamaño */
       font-family: monospace;
       font-size: 14px;
       padding: 10px;
-      border: 1px solid #ccc;
+      border: 1px solid #444; /* Borde más oscuro */
       border-radius: 5px;
+      background-color: #333; /* Fondo oscuro en el área de texto */
+      color: #ddd; /* Texto claro */
+      box-sizing: border-box;
     }
+
     .button-group {
       display: flex;
       gap: 10px;
     }
+
     button {
       padding: 10px 20px;
       font-size: 16px;
-      background-color: #0f0;
-      color: #000;
+      background-color: #1f9; /* Botones con un tono verde claro */
+      color: #121212; /* Texto oscuro para botones */
       border: none;
       border-radius: 5px;
       cursor: pointer;
     }
+
     button:hover {
-      background-color: #1f1;
+      background-color: #0f7; /* Efecto hover más oscuro */
     }
+
     .console {
-      background-color: #222;
-      color: #0f0;
+      background-color: #000; /* Fondo completamente negro para la consola */
+      color: #0f0; /* Texto verde brillante */
       padding: 15px;
       border-radius: 5px;
       font-family: monospace;
       height: 300px;
       overflow-y: auto;
     }
+
     .console p {
       margin: 0;
     }
