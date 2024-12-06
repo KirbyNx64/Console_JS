@@ -15,6 +15,8 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
+      flex-direction: column;
+      text-align: center;
     }
 
     .container {
@@ -71,9 +73,15 @@
     .console p {
       margin: 0;
     }
+
+    h1 {
+      color: #0f0; /* Título en blanco */
+      margin-bottom: 20px; /* Espaciado entre el título y el contenido */
+    }
   </style>
 </head>
 <body>
+  <h1>Consola JavaScript</h1> 
   <div class="container">
     <textarea id="scriptArea" placeholder="Escribe tu código JavaScript aquí..."></textarea>
     <div class="button-group">
@@ -118,6 +126,23 @@
 
     clearConsoleButton.addEventListener('click', () => {
       consoleOutput.innerHTML = '<p>Consola de salida:</p>';
+    });
+
+    // Detectar cuando se presiona la tecla Tab para agregar 4 espacios
+    scriptArea.addEventListener('keydown', function(event) {
+      if (event.key === 'Tab') {
+        event.preventDefault(); // Prevenir el comportamiento por defecto (salto de tabulación)
+        
+        const cursorPos = scriptArea.selectionStart;
+        const textBeforeCursor = scriptArea.value.slice(0, cursorPos);
+        const textAfterCursor = scriptArea.value.slice(cursorPos);
+
+        // Insertar 4 espacios en la posición actual del cursor
+        scriptArea.value = textBeforeCursor + '    ' + textAfterCursor;
+
+        // Mover el cursor a la posición correcta
+        scriptArea.selectionStart = scriptArea.selectionEnd = cursorPos + 4;
+      }
     });
   </script>
 </body>
