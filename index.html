@@ -100,7 +100,7 @@
       margin-bottom: 20px; 
       display: flex;
       align-items: center;
-      justify-content: space-between
+      justify-content: space-between;
     }
 
     h1 img {
@@ -108,6 +108,38 @@
       width: 40px; /* Tamaño del ícono */
       height: 40px;
     }
+
+    /* Estilos del ícono de descarga */
+    .download-button {
+      display: flex; /* Mostrar el botón normalmente */
+      align-items: center;
+      gap: 5px;
+      padding: 10px 20px;
+      background-color: rgb(117, 183, 41);
+      border-radius: 5px;
+      cursor: pointer;
+      color: #121212; /* Color del texto e ícono */
+      justify-content: flex-start; /* Alinear el botón hacia la izquierda */
+    }
+
+    .download-button svg {
+      width: 20px;
+      height: 20px;
+      fill: #121212; /* Color del ícono */
+    }
+
+    /* Cambios para pantallas pequeñas */
+    @media (max-width: 768px) {
+      .download-button span {
+        display: none; /* Ocultar el texto en móviles */
+      }
+
+      .download-button svg {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -120,7 +152,13 @@
     <div class="button-group">
       <button id="executeButton">Ejecutar</button>
       <button id="clearConsoleButton">Limpiar Consola</button>
-      <button id="downloadButton">Descargar script.js</button>
+      <div id="downloadButton" class="download-button">
+        <span>Descargar script.js</span>
+        <!-- Ícono de descarga (SVG) -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M12 16v-8M5 13l7 7 7-7" fill="none" stroke="#121212" stroke-width="2"/>
+        </svg>
+      </div>
     </div>
     <div class="console" id="consoleOutput">
       <p>Consola de salida:</p>
@@ -132,6 +170,7 @@
     const executeButton = document.getElementById('executeButton');
     const clearConsoleButton = document.getElementById('clearConsoleButton');
     const consoleOutput = document.getElementById('consoleOutput');
+    const downloadButton = document.getElementById('downloadButton');
 
     (function () {
       const originalLog = console.log;
