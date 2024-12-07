@@ -120,6 +120,7 @@
     <div class="button-group">
       <button id="executeButton">Ejecutar</button>
       <button id="clearConsoleButton">Limpiar Consola</button>
+      <button id="downloadButton">Descargar script.js</button>
     </div>
     <div class="console" id="consoleOutput">
       <p>Consola de salida:</p>
@@ -159,6 +160,15 @@
 
     clearConsoleButton.addEventListener('click', () => {
       consoleOutput.innerHTML = '<p>Consola de salida:</p>';
+    });
+
+    downloadButton.addEventListener('click', () => {
+      const scriptContent = scriptArea.value;
+      const blob = new Blob([scriptContent], { type: 'application/javascript' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'script.js';
+      link.click();
     });
 
     scriptArea.addEventListener('keydown', function(event) {
