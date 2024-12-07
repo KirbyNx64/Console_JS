@@ -77,13 +77,24 @@
     }
 
     h1 {
-      color: #0f0; 
+      color: rgb(117, 183, 41); 
       margin-bottom: 20px; 
+      display: flex;
+      align-items: center;
+      justify-content: space-between
+    }
+    h1 img {
+      margin-left: 10px; /* Espacio entre el ícono y el texto */
+      width: 40px; /* Tamaño del ícono */
+      height: 40px;
     }
   </style>
 </head>
 <body>
-  <h1>Consola JavaScript</h1> 
+  <h1>
+    Consola JavaScript
+    <img src="icono.ico" alt="Ícono">
+  </h1>
   <div class="container">
     <textarea id="scriptArea" placeholder="Escribe tu código JavaScript aquí..."></textarea>
     <div class="button-group">
