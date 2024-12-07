@@ -1,225 +1,35 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="icono.ico" type="image/x-icon">
-  <title>Consola JavaScript</title>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #121212;
-      color: #ddd;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      flex-direction: column;
-      text-align: center;
-    }
-
-    .container {
-      width: 90%;
-      max-width: 800px;
-      margin: 20px auto;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-
-    textarea {
-      width: 100%;
-      height: 200px;
-      font-family: 'Fira Code', monospace;
-      font-size: 14px;
-      padding: 10px;
-      border: 1px solid #444;
-      border-radius: 5px;
-      background-color: #333;
-      color: #ddd;
-      box-sizing: border-box;
-    }
-
-    textarea::selection {
-      background-color: #3e4451;
-      color: #ffffff;
-    }
-
-    textarea::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    textarea::-webkit-scrollbar-thumb {
-      background-color: #5e5e5e;
-      border-radius: 10px;
-    }
-
-    textarea::-webkit-scrollbar-track {
-      background-color: #333;
-    }
-
-    .button-group {
-      display: flex;
-      gap: 10px;
-    }
-
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: rgb(117, 183, 41);
-      color: #121212;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: rgb(149, 236, 50);
-    }
-
-    .console {
-      background-color: #000;
-      color: #0f0;
-      padding: 15px;
-      border-radius: 5px;
-      font-family: monospace;
-      height: 300px;
-      overflow-y: auto;
-      text-align: left;
-    }
-
-    .console p {
-      margin: 0;
-    }
-
-    h1 {
-      color: rgb(117, 183, 41); 
-      margin-bottom: 20px; 
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    h1 img {
-      margin-left: 10px;
-      width: 40px;
-      height: 40px;
-    }
-
-    .download-button {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      padding: 10px 20px;
-      background-color: rgb(117, 183, 41);
-      border-radius: 5px;
-      cursor: pointer;
-      color: #121212;
-      justify-content: flex-start;
-    }
-
-    .download-button svg {
-      width: 20px;
-      height: 20px;
-      fill: #121212;
-    }
-
-    @media (max-width: 768px) {
-      .download-button span {
-        display: none;
-      }
-
-      .download-button svg {
-        width: 24px;
-        height: 24px;
-      }
-    }
-
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="icono.ico" type="image/x-icon">
+    <title>Consola JavaScript</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css"> <!-- Enlace al archivo CSS -->
 </head>
 <body>
-  <h1>
-    Consola JavaScript
-    <img src="icono.ico" alt="Ícono">
-  </h1>
-  <div class="container">
-    <textarea id="scriptArea" placeholder="Escribe tu código JavaScript aquí..." spellcheck="false" inputmode="text" autocapitalize="off"></textarea>
-    <div class="button-group">
-      <button id="executeButton">Ejecutar</button>
-      <button id="clearConsoleButton">Limpiar Consola</button>
-      <div id="downloadButton" class="download-button">
-        <span>Descargar script.js</span>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-          <path d="M12 16v-8M5 13l7 7 7-7" fill="none" stroke="#121212" stroke-width="2"/>
-        </svg>
-      </div>
+    <h1>
+        Consola JavaScript
+        <img src="icono.ico" alt="Ícono">
+    </h1>
+    <div class="container">
+        <textarea id="scriptArea" placeholder="Escribe tu código JavaScript aquí..." spellcheck="false" inputmode="text" autocapitalize="off"></textarea>
+        <div class="button-group">
+            <button id="executeButton">Ejecutar</button>
+            <button id="clearConsoleButton">Limpiar Consola</button>
+            <div id="downloadButton" class="download-button">
+                <span>Descargar script.js</span>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M12 16v-8M5 13l7 7 7-7" fill="none" stroke="#121212" stroke-width="2"/>
+                </svg>
+            </div>
+        </div>
+        <div class="console" id="consoleOutput">
+            <p>Consola de salida:</p>
+        </div>
     </div>
-    <div class="console" id="consoleOutput">
-      <p>Consola de salida:</p>
-    </div>
-  </div>
 
-  <script>
-    const scriptArea = document.getElementById('scriptArea');
-    const executeButton = document.getElementById('executeButton');
-    const clearConsoleButton = document.getElementById('clearConsoleButton');
-    const consoleOutput = document.getElementById('consoleOutput');
-    const downloadButton = document.getElementById('downloadButton');
-
-    (function () {
-      const originalLog = console.log;
-      console.log = function (...args) {
-        args.forEach(arg => {
-          consoleOutput.innerHTML += `<p>&gt; ${arg}</p>`;
-        });
-        consoleOutput.scrollTop = consoleOutput.scrollHeight;
-        originalLog.apply(console, args);
-      };
-    })();
-
-    executeButton.addEventListener('click', () => {
-      const scriptContent = scriptArea.value;
-      consoleOutput.innerHTML += `<p>&gt; <span style="color: #1f9; font-weight: bold;">Ejecutando script...</span></p>`;
-      try {
-        const result = eval(scriptContent);
-        if (result !== undefined) {
-          consoleOutput.innerHTML += `<p>${result}</p>`;
-        }
-      } catch (error) {
-        consoleOutput.innerHTML += `<p style="color: #f33;">Error: ${error.message}</p>`;
-      }
-      consoleOutput.scrollTop = consoleOutput.scrollHeight;
-    });
-
-    clearConsoleButton.addEventListener('click', () => {
-      consoleOutput.innerHTML = '<p>Consola de salida:</p>';
-    });
-
-    downloadButton.addEventListener('click', () => {
-      const scriptContent = scriptArea.value;
-      const blob = new Blob([scriptContent], { type: 'application/javascript' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = 'script.js';
-      link.click();
-    });
-
-    scriptArea.addEventListener('keydown', function(event) {
-      if (event.key === 'Tab') {
-        event.preventDefault();
-        
-        const cursorPos = scriptArea.selectionStart;
-        const textBeforeCursor = scriptArea.value.slice(0, cursorPos);
-        const textAfterCursor = scriptArea.value.slice(cursorPos);
-
-        scriptArea.value = textBeforeCursor + '    ' + textAfterCursor;
-
-        scriptArea.selectionStart = scriptArea.selectionEnd = cursorPos + 4;
-      }
-    });
-  </script>
+    <script src="script.js"></script> <!-- Enlace al archivo JS -->
 </body>
 </html>
