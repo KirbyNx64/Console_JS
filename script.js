@@ -1,15 +1,14 @@
-// Variables globales
-let contador = 0;
-let intervalo = null; // Controla el intervalo
-let isRunning = false; // Estado del botón
-
 const scriptArea = document.getElementById('scriptArea');
 const executeButton = document.getElementById('executeButton');
 const clearConsoleButton = document.getElementById('clearConsoleButton');
 const consoleOutput = document.getElementById('consoleOutput');
 const downloadButton = document.getElementById('downloadButton');
 
-// Redefinir console.log para mostrar en la consola personalizada
+// Variables para controlar la ejecución
+let isRunning = false;
+let intervalId = null;
+let contador = 0;
+
 (function () {
     const originalLog = console.log;
     console.log = function (...args) {
@@ -23,34 +22,47 @@ const downloadButton = document.getElementById('downloadButton');
 
 // Botón de ejecutar/detener
 executeButton.addEventListener('click', () => {
+    const scriptContent = scriptArea.value;
+    
     if (isRunning) {
-        // Detener el contador
-        clearInterval(intervalo);
-        intervalo = null;
+        // Detener el contador si está corriendo
+        clearInterval(intervalId);
+        intervalId = null;
         isRunning = false;
         executeButton.textContent = 'Ejecutar';
         executeButton.style.backgroundColor = 'rgb(117, 183, 41)';
-        consoleOutput.innerHTML += `<p>&gt; <span style="color: #f33; font-weight: bold;">Ejecución detenida.</span></p>`;
+        console.log('<span style="color: #223E69; font-weight: bold;">Ejecución detenida.</span>');
     } else {
-        // Iniciar el contador
+        // Ejecutar el script del textarea
+        console.log('<span style="color: #90EE90; font-weight: bold;">Ejecutando script...</span>');
+        try {
+            // Usar eval para ejecutar el código introducido en el textarea
+            eval(scriptContent);
+        } catch (error) {
+            console.log(`<span style="color: #f33;"> Error: ${error.message}</span>`);
+        }
+        
+        // Cambiar el estado del botón
         isRunning = true;
         executeButton.textContent = 'Detener';
         executeButton.style.backgroundColor = '#f33';
-        consoleOutput.innerHTML += `<p>&gt; <span style="color: #1f9; font-weight: bold;">Iniciando contador...</span></p>`;
-        contador = 0; // Reiniciar el contador
-        intervalo = setInterval(() => {
-            contador++;
-            console.log(`Contador: ${contador}`);
-        }, 1000);
+        
+        // Iniciar el contador si no está corriendo
+        if (intervalId === null) {
+            contador = 0; // Reiniciar contador
+            intervalId = setInterval(() => {
+                contador++;
+            }, 1000);
+        }
     }
 });
 
-// Botón para limpiar la consola
+// Limpiar la consola
 clearConsoleButton.addEventListener('click', () => {
     consoleOutput.innerHTML = '<p>Consola de salida:</p>';
 });
 
-// Botón para descargar el código del textarea como archivo .js
+// Descargar el script
 downloadButton.addEventListener('click', () => {
     const scriptContent = scriptArea.value;
     const blob = new Blob([scriptContent], { type: 'application/javascript' });
@@ -60,7 +72,7 @@ downloadButton.addEventListener('click', () => {
     link.click();
 });
 
-// Agregar tabulación en el textarea
+// Agregar tabulación al textarea
 scriptArea.addEventListener('keydown', function(event) {
     if (event.key === 'Tab') {
         event.preventDefault();
